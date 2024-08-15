@@ -15,6 +15,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Vision.TimestampedVisionUpdate;
+import frc.robot.Constants.FieldConstants;
 import frc.robot.Utils.GeomUtil;
 
 public class VisionSubsystem extends SubsystemBase{
@@ -28,6 +29,8 @@ public class VisionSubsystem extends SubsystemBase{
     new Pose3d[]{
       new Pose3d(0, 0, 0, new Rotation3d())
     };
+  
+  private static final double fieldBorderMargin = 0.5;
   public void setDataInterfaces(Supplier<Pose2d> poseSupplier){
     this.poseSupplier = poseSupplier;
   }
@@ -96,7 +99,18 @@ public class VisionSubsystem extends SubsystemBase{
         
       }
 
+      if(cameraPose == null || robotPose == null){
+        continue;
+      }
+      if(robotPose.getX() < -fieldBorderMargin
+        || robotPose.getX() > FieldConstants.fieldLength fieldBorderMargin
+        || robotPose.getY() < -fieldBorderMargin
+        || robotPose.getY() > FieldConstants.fieldWidth + fieldBorderMargin){
+          continue;
+      }
+
       
     }
+
   }
 }

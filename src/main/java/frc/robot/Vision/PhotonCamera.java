@@ -37,6 +37,7 @@ public class PhotonCamera implements AutoCloseable{
       new PacketSubscriber<PhotonPipelineResult>(
         rawBytesSubscriber, PhotonPipelineResult.serde, new PhotonPipelineResult());
   }
+
   public PhotonPipelineResult getLatestResult() {
     PhotonPipelineResult results = resultSubscriber.get();
     double currentCallTime = Timer.getFPGATimestamp();
@@ -49,6 +50,7 @@ public class PhotonCamera implements AutoCloseable{
       lastCaptureTime = captureTime;
       
       lastCallTime = MathUtil.clamp(lastCallTime, lastCallTimeTwo, currentCallTime);
+      //don't know why not put cur
     }
     results.setTimestampSeconds(lastCallTime);
 
